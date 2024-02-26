@@ -1,9 +1,11 @@
-import { StyleSheet } from 'react-native';
+import {Button, StyleSheet} from 'react-native';
 
 import EditScreenInfo from '@/components/EditScreenInfo';
 import { Text, View } from '@/components/Themed';
 import axios from "axios";
 import React, {useState} from 'react';
+import axiosHttp from "@/app/auth/interceptor";
+import {GlobalConstants} from "@/app/common/Global-constants";
 
 
 export default function TabOneScreen() {
@@ -20,9 +22,9 @@ export default function TabOneScreen() {
 
   return (
     <View style={styles.container}>
-      <p>Coucou</p>
-      <button onClick={callJoke}>CLICK</button>
-      <span>{joke}</span>
+      <Text>Coucou</Text>
+      <Button title="Get a joke" onPress={callJoke} />
+      <Text>{joke}</Text>
     </View>
   );
 }

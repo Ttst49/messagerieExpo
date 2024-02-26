@@ -23,8 +23,8 @@ export default function TabOneScreen() {
   return (
     <View style={styles.container}>
       <Text>Coucou</Text>
-      <Button title="Get a joke" onPress={callJoke} />
-      <Text>{joke}</Text>
+      {!GlobalConstants.isLoggedIn() ? <Text>Not logged in</Text> : <Text>Logged in</Text>}
+      <Button onPress={()=>{console.log(GlobalConstants.token)}}  title="Test"/>
     </View>
   );
 }

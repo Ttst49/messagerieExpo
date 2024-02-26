@@ -1,12 +1,9 @@
 import {Button, StyleSheet, TextInput} from 'react-native';
-
-import EditScreenInfo from '@/components/EditScreenInfo';
-import { Text, View } from '@/components/Themed';
+import {View } from '@/components/Themed';
 import axios from "axios";
-import {GlobalConstants} from "@/app/common/Global-constants";
 import {useState} from "react";
-import {User} from "@/app/Interface/User";
-import {black} from "colorette";
+import {GlobalConstants} from "@/app/common/Global-constants";
+
 
 export default function TabTwoScreen() {
   const [username,setUsername]= useState("")
@@ -14,10 +11,18 @@ export default function TabTwoScreen() {
 
   function login(){
     const user = {username,password}
-    axios.post(GlobalConstants.baseUrl+"token",user)
+    axios.post(GlobalConstants.baseUrl+"login_check",user)
         .then((response)=>{
           console.log(response)
+          GlobalConstants.token = response.data.token
+        })
+  }
 
+  function register(){
+    const user = {username,password}
+    axios.post(GlobalConstants.baseUrl+"register",user)
+        .then((response)=>{
+          console.log(response.data)
         })
   }
 
@@ -37,7 +42,9 @@ export default function TabTwoScreen() {
           placeholder="Password"
           onChangeText={text => setPassword(text)}
       />
-        <Button onPress={login} title="Connexion" />
+        <Button onPress={register} title="Register" />
+        <Button onPress={login} title="Login" />
+        <Button onPress={()=>{console.log(GlobalConstants.isLoggedIn())}} title="Is logged in" />
     </View>
   );
 }

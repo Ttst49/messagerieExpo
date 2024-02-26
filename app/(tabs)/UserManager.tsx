@@ -6,30 +6,30 @@ import {GlobalConstants} from "@/app/common/Global-constants";
 
 
 export default function TabTwoScreen() {
-  const [username,setUsername]= useState("")
-  const [password,setPassword]= useState("")
+    const [username,setUsername]= useState("")
+    const [password,setPassword]= useState("")
 
-  function login(){
+    function login(){
     const user = {username,password}
     axios.post(GlobalConstants.baseUrl+"login_check",user)
         .then((response)=>{
           console.log(response)
           GlobalConstants.token = response.data.token
         })
-  }
+    }
 
-  function register(){
-    const user = {username,password}
-    axios.post(GlobalConstants.baseUrl+"register",user)
-        .then((response)=>{
-          console.log(response.data)
-        })
-  }
+    function register(){
+        const user = {username,password}
+        axios.post(GlobalConstants.baseUrl+"register",user)
+            .then((response)=>{
+            console.log(response.data)
+            })
+    }
 
 
-  return (
+    return (
     <View style={styles.container}>
-      <TextInput
+        <TextInput
           style={styles.input}
           value={username}
           placeholder="Username"
@@ -44,7 +44,6 @@ export default function TabTwoScreen() {
       />
         <Button onPress={register} title="Register" />
         <Button onPress={login} title="Login" />
-        <Button onPress={()=>{console.log(GlobalConstants.isLoggedIn())}} title="Is logged in" />
     </View>
   );
 }

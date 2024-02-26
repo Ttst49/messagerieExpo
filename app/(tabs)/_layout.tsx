@@ -6,6 +6,7 @@ import { Pressable } from 'react-native';
 import Colors from '@/constants/Colors';
 import { useColorScheme } from '@/components/useColorScheme';
 import { useClientOnlyValue } from '@/components/useClientOnlyValue';
+import {GlobalConstants} from "@/app/common/Global-constants";
 
 // You can explore the built-in icon families and icons on the web at https://icons.expo.fyi/
 function TabBarIcon(props: {
@@ -29,7 +30,7 @@ export default function TabLayout() {
       <Tabs.Screen
         name="index"
         options={{
-          title: 'Tab One',
+          title: 'Home',
           tabBarIcon: ({ color }) => <TabBarIcon name="code" color={color} />,
           headerRight: () => (
             <Link href="/modal" asChild>
@@ -47,10 +48,23 @@ export default function TabLayout() {
           ),
         }}
       />
+        {GlobalConstants.isLoggedIn? <Tabs.Screen
+            name="Login"
+            options={{
+                title: 'Login',
+                tabBarIcon: ({ color }) => <TabBarIcon name="code" color={color} />,
+            }}
+        /> : <Tabs.Screen
+            name="profile"
+            options={{
+                title: 'profile',
+                tabBarIcon: ({ color }) => <TabBarIcon name="code" color={color} />,
+            }}
+        /> }
       <Tabs.Screen
-        name="two"
+        name="User"
         options={{
-          title: 'Tab Two',
+          title: 'user',
           tabBarIcon: ({ color }) => <TabBarIcon name="code" color={color} />,
         }}
       />

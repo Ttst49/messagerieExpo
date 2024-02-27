@@ -3,25 +3,43 @@ import {View } from '@/components/Themed';
 import axios from "axios";
 import {useState} from "react";
 import {GlobalConstants} from "@/app/common/Global-constants";
-import {Link} from "expo-router";
+import {Link, useRouter} from "expo-router";
+import axiosHttp from "@/app/auth/interceptor";
+import {Input, InputField} from "@gluestack-ui/themed";
 
 
 export default function login() {
     const [username,setUsername]= useState("")
     const [password,setPassword]= useState("")
+    const navigation = useRouter()
 
-    function login(){
+    async function login(){
         const user = {username,password}
-        axios.post(GlobalConstants.baseUrl+"login_check",user)
+        await axios.post(GlobalConstants.baseUrl+"login_check",user)
             .then((response)=>{
                 console.log(response)
                 GlobalConstants.token = response.data.token
             })
+        await axiosHttp.get(GlobalConstants.baseUrl+"profile/getActual")
+            .then((response:any)=>{
+                console.log(response)
+                GlobalConstants.actualUser = {
+                    id:response.data.id,
+                    username:response.data.username,
+                    profile: response.data.profile
+                }
+            })
+            .then(()=>{
+                navigation.push("/home")
+            })
+
     }
 
 
     return (
         <View style={styles.container}>
+
+
             <TextInput
                 style={styles.input}
                 value={username}
@@ -48,6 +66,7 @@ const styles = StyleSheet.create({
         justifyContent: 'center',
     },
     input:{
+        fontSize: 25,
         borderStyle: "solid",
         borderColor: "black",
         padding: 5,

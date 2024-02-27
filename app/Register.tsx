@@ -48,6 +48,7 @@ const styles = StyleSheet.create({
         justifyContent: 'center',
     },
     input:{
+        fontSize: 25,
         borderStyle: "solid",
         borderColor: "black",
         padding: 5,

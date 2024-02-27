@@ -1,14 +1,11 @@
-import {Button, StyleSheet, Text, TextInput} from 'react-native';
+import {StyleSheet, Text} from 'react-native';
 import {View } from '@/components/Themed';
-import axios from "axios";
-import {useState} from "react";
 import {GlobalConstants} from "@/app/common/Global-constants";
-import {Link} from "expo-router";
-
+import {useRouter} from "expo-router";
 
 export default function profile() {
 
-
+    const navigation = useRouter()
     return (
         <View style={styles.container}>
             {GlobalConstants.isLoggedIn()
@@ -18,7 +15,7 @@ export default function profile() {
                 </View>
                 :
                 <View>
-                    <Text>Not logged in</Text>
+                    <Text>Log in before</Text>
                 </View>
             }
         </View>

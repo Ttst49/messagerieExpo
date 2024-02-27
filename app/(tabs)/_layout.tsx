@@ -1,7 +1,6 @@
 import React from 'react';
 import FontAwesome from '@expo/vector-icons/FontAwesome';
-import { Link, Tabs } from 'expo-router';
-import { AntDesign } from '@expo/vector-icons';
+import {Tabs} from 'expo-router';
 import Colors from '@/constants/Colors';
 import { useColorScheme } from '@/components/useColorScheme';
 import { useClientOnlyValue } from '@/components/useClientOnlyValue';
@@ -30,9 +29,25 @@ export default function TabLayout() {
             name={"home"}
             options={{
                 title: 'home',
-                tabBarIcon: ({ color }) => <TabBarIcon name="home" color={color} />,
+                tabBarIcon: ({ color }) => <TabBarIcon name="home" color={color}
+                />,
             }}
         />
+        <Tabs.Screen
+            name={"channel"}
+            options={{
+                headerShown: false,
+                tabBarLabel: "channels",
+                href: (GlobalConstants.isLoggedIn())? "/channel" : null  }}
+        />
+        <Tabs.Screen
+            name="profile"
+            options={{
+                headerShown: false,
+                tabBarLabel: (GlobalConstants.isLoggedIn()? "profile": "login"),
+                href: (GlobalConstants.isLoggedIn())? "/profile" : "/login"  }}
+        />
+
     </Tabs>
   );
 }

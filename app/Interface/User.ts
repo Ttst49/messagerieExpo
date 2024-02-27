@@ -1,5 +1,7 @@
+import {UserFull} from "@/app/Interface/UserFull";
+
 export interface User{
     id:number
     username:string
-    password:string
+    profile: UserFull
 }

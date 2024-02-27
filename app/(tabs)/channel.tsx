@@ -1,14 +1,18 @@
 import {Button, StyleSheet} from 'react-native';
 import { Text, View } from '@/components/Themed';
-import React, {useState} from 'react';
+import React, {useEffect, useState} from 'react';
 import axiosHttp from "@/app/auth/interceptor";
 import {GlobalConstants} from "@/app/common/Global-constants";
 import {Channel} from "@/app/Interface/Channel";
-import {Link} from "expo-router";
+import {Card, Heading} from "@gluestack-ui/themed";
 
 
-export default function TabOneScreen() {
+export default function channel() {
     const [channels ,setChannels] = useState([])
+
+    useEffect(() => {
+        showChannels()
+    }, []);
 
     function showChannels(){
         axiosHttp.get(GlobalConstants.baseUrl+"channel/showAll")
@@ -20,9 +24,11 @@ export default function TabOneScreen() {
 
     return (
         <View style={styles.container}>
-            <Button title="Voir tous les channels" onPress={showChannels} />
             {channels.map((channel:Channel)=>(
-                <Text style={styles.channelCard} key={channel.id}>{channel.name}</Text>
+                <Card key={channel.id} style={styles.channelCard}>
+                    <Text>{channel.name}</Text>
+                    <Button title={"Supprimer channel"} />
+                </Card>
             ))}
         </View>
     );
@@ -41,6 +47,6 @@ const styles = StyleSheet.create({
         flexDirection: "row",
         justifyContent: "center",
         alignItems: "center",
-        backgroundColor: "gray",
-    }
+        backgroundColor: "blue",
+    },
 });

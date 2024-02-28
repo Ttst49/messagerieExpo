@@ -21,7 +21,7 @@ export default function channel() {
     useEffect(() => {
         setTimeout(()=>{
             if (!GlobalConstants.isLoggedIn()){
-                navigation.push("/home")
+                navigation.push("/login")
             }else {
                 getChannel(id)
             }
@@ -36,8 +36,18 @@ export default function channel() {
             })
     }
 
+    function sendNewMessage(){
+        if (newMessage != ""){
+            axiosHttp.post(
+                GlobalConstants.baseUrl+"channel/message/create/"+channel!.id,
+                {"content":newMessage}
+            )
+                .then((response)=>{
+                    console.log(response)
+                })
+        }
 
-
+    }
 
 
     return (
@@ -60,6 +70,7 @@ export default function channel() {
                                         tailColor='#1084ff'
                                         withTail={false}
                                         onPress={() => console.log(item)}
+                                        onLongPress={()=>console.log("ouille")}
                                     >
                                         <Text>{item.content}</Text>
                                     </ChatBubble>
@@ -72,6 +83,7 @@ export default function channel() {
                                         tailColor='#1084ff'
                                         withTail={false}
                                         onPress={() => console.log(item)}
+                                        onLongPress={()=>console.log("ouille")}
                                     >
                                         <Text>{item.content}</Text>
                                     </ChatBubble>
@@ -85,6 +97,7 @@ export default function channel() {
                     placeholder={"Votre message..."}
                     onChangeText={text=>setNewMessage(text)}
                 />
+                    <Text style={styles.btnCreate} onPress={sendNewMessage} >Envoyer un message</Text>
             </>
 
         </View>
@@ -141,7 +154,7 @@ const styles = StyleSheet.create({
     },
     input:{
         flex: 1,
-        width: "98%",
+        width: "75%",
         fontSize: 25,
         borderStyle: "solid",
         borderColor: "gray",
@@ -155,5 +168,19 @@ const styles = StyleSheet.create({
     },
     content:{
         width:"100%"
+    },
+    btnCreate:{
+        margin: 15,
+        alignItems: 'center',
+        justifyContent: 'center',
+        paddingVertical: 12,
+        paddingHorizontal: 32,
+        borderRadius: 4,
+        elevation: 3,
+        backgroundColor: 'purple',
+        color: "white",
+        position: "absolute",
+        right: 0,
+        bottom:0
     }
 });

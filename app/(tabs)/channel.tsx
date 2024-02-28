@@ -1,6 +1,6 @@
-import {Button, FlatList, ScrollView, StyleSheet} from 'react-native';
+import { FlatList, StyleSheet} from 'react-native';
 import { Text, View } from '@/components/Themed';
-import React, {useEffect, useMemo, useState} from 'react';
+import React, {useEffect, useState} from 'react';
 import axiosHttp from "@/app/auth/interceptor";
 import {GlobalConstants} from "@/app/common/Global-constants";
 import {Channel} from "@/app/Interface/Channel";
@@ -33,40 +33,39 @@ export default function channel() {
     function removeChannel(id:number){
         axiosHttp.delete(GlobalConstants.baseUrl+"channel/remove/"+id)
             .then((response)=>{
-                console.log(response.data)
                 getChannels()
             })
     }
 
-    /**
-     * <ScrollView>
-     *                 {channels.map((channel:Channel)=>(
-     *                     <Card key={channel.id} style={styles.channelCard}>
-     *                         <Text style={styles.text}>{channel.name}</Text>
-     *                         <Text style={styles.btn} onPress={()=>{removeChannel(channel.id)}}>Supprimer channel</Text>
-     *                         <Text style={styles.btn} onPress={()=>{navigation.push({pathname:`/channel/show/${channel.id}`})}}>Montrer channel</Text>
-     *                     </Card>
-     *                 ))}
-     *                 <Link style={styles.btn} href={"/channel/create"} >Créer un nouveau channel</Link>
-     *             </ScrollView>
-     */
+
+
     return (
         <View style={styles.container}>
-            <Card>
+            <Card style={styles.body}>
                 <FlatList
                     showsVerticalScrollIndicator={false}
                     data={channels}
                     renderItem={({item}:{item:Channel})=>
                         <Card style={styles.channelCard}>
                             <Text style={styles.text}>{item.name}</Text>
-                            <Text style={styles.btn} onPress={()=>{removeChannel(item.id)}}>Supprimer channel</Text>
-                            <Text style={styles.btn} onPress={()=>{navigation.push({pathname:`/channel/show/${item.id}`})}}>Montrer channel</Text>
+                            {item.owner.id == GlobalConstants.actualUser.profile.id
+                                ?
+                                <>
+                                    <Text style={styles.btn} onPress={()=>{removeChannel(item.id)}}>Supprimer channel</Text>
+                                    <Text style={styles.btn} onPress={()=>{navigation.push({pathname:`/channel/edit/${item.id}`})}}>Editer channel</Text>
+                                    <Text style={styles.btn} onPress={()=>{navigation.push({pathname:`/channel/show/${item.id}`})}}>Montrer channel</Text>
+                                </>
+                                :
+                                <>
+                                    <Text style={styles.btn} onPress={()=>{navigation.push({pathname:`/channel/show/${item.id}`})}}>Montrer channel</Text>
+                                </>
+                            }
                         </Card>
                 }
                     keyExtractor={(item)=>item.id.toString()}
                 />
             </Card>
-
+            <Link style={styles.btnCreate} href={"/channel/create"} >Créer un nouveau channel</Link>
         </View>
     );
 }
@@ -103,6 +102,22 @@ const styles = StyleSheet.create({
         borderRadius: 4,
         elevation: 3,
         backgroundColor: 'gray',
-        color: "white"
+        color: "white",
+    },
+    btnCreate:{
+        margin: 15,
+        alignItems: 'center',
+        justifyContent: 'center',
+        paddingVertical: 32,
+        paddingHorizontal: 64,
+        borderRadius: 10,
+        elevation: 3,
+        backgroundColor: 'gray',
+        color: "white",
+        position: "absolute",
+        bottom: 10,
+    },
+    body:{
+        marginBottom:130
     }
 });

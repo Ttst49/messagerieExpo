@@ -11,7 +11,6 @@ export default function register() {
     async function createChannel(){
         await axiosHttp.post(GlobalConstants.baseUrl+"channel/create", {"name":channelName})
             .then((response)=>{
-                console.log(response)
             })
         navigation.push('/channel')
     }
@@ -38,8 +37,10 @@ const styles = StyleSheet.create({
     input:{
         fontSize: 25,
         borderStyle: "solid",
-        borderColor: "black",
+        borderColor: "gray",
         padding: 5,
+        margin: 15,
+        borderWidth: 1
     },
 
 });

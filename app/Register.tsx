@@ -15,7 +15,6 @@ export default function register() {
         const user = {username,password}
         axios.post(GlobalConstants.baseUrl+"register",user)
             .then((response)=>{
-                console.log(response.data)
             })
     }
 
@@ -50,8 +49,10 @@ const styles = StyleSheet.create({
     input:{
         fontSize: 25,
         borderStyle: "solid",
-        borderColor: "black",
+        borderColor: "gray",
         padding: 5,
+        margin: 15,
+        borderWidth: 1
     },
     btnSecondary:{
         margin: 15,

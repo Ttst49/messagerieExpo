@@ -41,6 +41,12 @@ export default function TabLayout() {
                 href: (GlobalConstants.isLoggedIn())? "/channel" : null  }}
         />
         <Tabs.Screen
+            name="group"
+            options={{
+                headerShown: false,
+                href: (GlobalConstants.isLoggedIn())? "/group" : null  }}
+        />
+        <Tabs.Screen
             name="profile"
             options={{
                 headerShown: false,

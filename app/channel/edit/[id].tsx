@@ -16,7 +16,7 @@ export default function channel() {
     useEffect(() => {
         setTimeout(()=>{
             if (!GlobalConstants.isLoggedIn()){
-                navigation.push("/home")
+                navigation.push("/login")
             }else {
                 getChannel(id)
             }

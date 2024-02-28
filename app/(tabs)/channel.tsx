@@ -16,7 +16,7 @@ export default function channel() {
     useEffect(() => {
        setTimeout(()=>{
            if (!GlobalConstants.isLoggedIn()){
-               navigation.push("/home")
+               navigation.push("/login")
            }else {
                getChannels()
            }
@@ -32,12 +32,8 @@ export default function channel() {
 
     function removeChannel(id:number){
         axiosHttp.delete(GlobalConstants.baseUrl+"channel/remove/"+id)
-            .then((response)=>{
-                getChannels()
-            })
+            .then(getChannels)
     }
-
-
 
     return (
         <View style={styles.container}>

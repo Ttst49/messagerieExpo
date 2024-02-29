@@ -5,6 +5,7 @@ import { useRouter} from "expo-router";
 import axiosHttp from "@/app/auth/interceptor";
 import {GlobalConstants} from "@/app/common/Global-constants";
 import {Group} from "@/app/Interface/Group";
+import {Card} from "@gluestack-ui/themed";
 
 
 export default function group() {
@@ -30,16 +31,20 @@ export default function group() {
 
     return (
         <View style={styles.container}>
-            <FlatList
-                data={groups}
-                renderItem={({item}:{item:Group})=>
-                    <Text>{
-                        item.groupMembers[0].relatedTo.username+
-                        " / "+
-                        item.groupMembers[1].relatedTo.username
-                    }</Text>
-                }
-            />
+            <Card style={styles.body}>
+                <FlatList
+                    data={groups}
+                    renderItem={({item}:{item:Group})=>
+                        <Card style={styles.groupCard}>
+                            <Text style={styles.text}>{
+                                item.groupMembers[0].relatedTo.username+
+                                " / "+
+                                item.groupMembers[1].relatedTo.username
+                            }</Text>
+                        </Card>
+                    }
+                />
+            </Card>
         </View>
     );
 }
@@ -51,5 +56,23 @@ const styles = StyleSheet.create({
         flexDirection: "column",
         alignItems: 'center',
         justifyContent: 'center',
+    },
+    body:{
+        marginBottom:130
+    },
+    groupCard:{
+        width: '100%',
+        margin: 5,
+        borderRadius: 4,
+        display: "flex",
+        flexDirection: "column",
+        justifyContent: "center",
+        alignItems: "center",
+        backgroundColor: "#252525",
+    },
+    text:{
+        color: "white",
+        fontSize: 25,
+
     },
 });

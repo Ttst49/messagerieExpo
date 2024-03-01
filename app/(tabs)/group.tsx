@@ -5,7 +5,7 @@ import { useRouter} from "expo-router";
 import axiosHttp from "@/app/auth/interceptor";
 import {GlobalConstants} from "@/app/common/Global-constants";
 import {Group} from "@/app/Interface/Group";
-import {Card, Text} from "react-native-paper";
+import {Button, Card, FAB, Text} from "react-native-paper";
 
 
 export default function group() {
@@ -29,6 +29,13 @@ export default function group() {
             })
     }
 
+    function leaveGroup(id:number){
+        axiosHttp.get(GlobalConstants.baseUrl+"group/conversation/leave/"+id)
+            .then((response)=>{
+                console.log(response)
+            })
+    }
+
     return (
         <View style={styles.container}>
             <Card style={styles.body}>
@@ -36,6 +43,7 @@ export default function group() {
                     data={groups}
                     renderItem={({item}:{item:Group})=>
                         <Card
+                            onPress={()=>{navigation.push({pathname:`/group/show/${item.id}`})}}
                             style={styles.groupCard}
                         >
                             <Card.Content>
@@ -45,10 +53,28 @@ export default function group() {
                                 item.groupMembers[1].relatedTo.username
                             }</Text>
                             </Card.Content>
+                            <Card.Actions>
+                                {item.owner.id == GlobalConstants.actualUser.profile.id
+                                    ?
+                                    <>
+                                        <Button onPress={()=>{navigation.push({pathname:`/group/edit/${item.id}`})}}>Editer groupe</Button>
+                                    </>
+                                    :
+                                    <>
+                                    </>
+                                }
+                            </Card.Actions>
                         </Card>
                     }
                 />
             </Card>
+            <FAB
+                style={styles.btnCreate}
+                onPress={()=>{navigation.push("/group/create")}}
+                label={"Créer un nouveau groupe"}
+                color={"white"}
+                rippleColor={"black"}
+            />
         </View>
     );
 }
@@ -65,5 +91,13 @@ const styles = StyleSheet.create({
     },
     groupCard:{
         margin: 15,
+    },
+    btnCreate:{
+        margin: 15,
+        alignItems: 'center',
+        justifyContent: 'center',
+        position: "absolute",
+        backgroundColor: "gray",
+        bottom: 10,
     },
 });

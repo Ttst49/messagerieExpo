@@ -1,11 +1,11 @@
 import {FlatList, StyleSheet} from 'react-native';
-import { Text, View } from '@/components/Themed';
+import { View } from '@/components/Themed';
 import React, {useEffect, useState} from 'react';
 import { useRouter} from "expo-router";
 import axiosHttp from "@/app/auth/interceptor";
 import {GlobalConstants} from "@/app/common/Global-constants";
 import {Group} from "@/app/Interface/Group";
-import {Card} from "@gluestack-ui/themed";
+import {Card, Text} from "react-native-paper";
 
 
 export default function group() {
@@ -35,12 +35,16 @@ export default function group() {
                 <FlatList
                     data={groups}
                     renderItem={({item}:{item:Group})=>
-                        <Card style={styles.groupCard}>
-                            <Text style={styles.text}>{
+                        <Card
+                            style={styles.groupCard}
+                        >
+                            <Card.Content>
+                                <Text variant={"titleLarge"}>{
                                 item.groupMembers[0].relatedTo.username+
                                 " / "+
                                 item.groupMembers[1].relatedTo.username
                             }</Text>
+                            </Card.Content>
                         </Card>
                     }
                 />
@@ -51,7 +55,6 @@ export default function group() {
 
 const styles = StyleSheet.create({
     container: {
-        marginTop: 50,
         flex: 1,
         flexDirection: "column",
         alignItems: 'center',
@@ -61,18 +64,6 @@ const styles = StyleSheet.create({
         marginBottom:130
     },
     groupCard:{
-        width: '100%',
-        margin: 5,
-        borderRadius: 4,
-        display: "flex",
-        flexDirection: "column",
-        justifyContent: "center",
-        alignItems: "center",
-        backgroundColor: "#252525",
-    },
-    text:{
-        color: "white",
-        fontSize: 25,
-
+        margin: 15,
     },
 });

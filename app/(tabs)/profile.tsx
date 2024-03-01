@@ -5,7 +5,7 @@ import {useRouter} from "expo-router";
 import React, {useEffect, useState} from "react";
 import {User} from "@/app/Interface/User";
 import axiosHttp from "@/app/auth/interceptor";
-import {Avatar, Button} from "react-native-paper";
+import {Avatar, Button, FAB} from "react-native-paper";
 import {Div} from "@expo/html-elements";
 
 export default function profile() {
@@ -33,9 +33,6 @@ export default function profile() {
 
     return (
         <View style={styles.container}>
-            <Text style={styles.text}>
-                Profile
-            </Text>
             <View style={styles.content}>
                 <FlatList
                     data={friends}
@@ -48,9 +45,11 @@ export default function profile() {
                         </>
                     }
                 />
-                <Button icon="account-details" mode="outlined" onPress={() => console.log('Pressed')}>
-                    Voir tous les utilisateurs
-                </Button>
+                <FAB
+                    style={styles.btnSuccess}
+                    icon="account-details"
+                     onPress={() => navigation.push("/user/")}
+                     label={"Voir tous les utilisateurs"} />
             </View>
         </View>
     );
@@ -69,14 +68,7 @@ const styles = StyleSheet.create({
     },
     btnSuccess:{
         margin: 15,
-        alignItems: 'center',
-        justifyContent: 'center',
-        paddingVertical: 12,
-        paddingHorizontal: 32,
-        borderRadius: 4,
-        elevation: 3,
-        backgroundColor: 'green',
-        color: "white"
+
     },
     text:{
         fontSize: 25

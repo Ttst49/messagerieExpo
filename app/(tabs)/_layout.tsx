@@ -26,7 +26,7 @@ export default function TabLayout() {
         headerShown: useClientOnlyValue(false, true),
       }}>
         <Tabs.Screen
-            name={"home"}
+            name={"index"}
             options={{
                 title: 'home',
                 tabBarIcon: ({ color }) => <TabBarIcon name="home" color={color}
@@ -36,21 +36,22 @@ export default function TabLayout() {
         <Tabs.Screen
             name={"channel"}
             options={{
-                headerShown: false,
-                tabBarLabel: "channels",
+                title: "channels",
+                tabBarIcon: ({color})=><TabBarIcon name={"wechat"} color={color}/>,
                 href: (GlobalConstants.isLoggedIn())? "/channel" : null  }}
         />
         <Tabs.Screen
             name="group"
             options={{
-                headerShown: false,
+                title: "groups",
+                tabBarIcon: ({color})=><TabBarIcon name={"users"} color={color}/>,
                 href: (GlobalConstants.isLoggedIn())? "/group" : null  }}
         />
         <Tabs.Screen
             name="profile"
             options={{
-                headerShown: false,
-                tabBarLabel: (GlobalConstants.isLoggedIn()? "profile": "login"),
+                title: "profile",
+                tabBarIcon: ({color})=><TabBarIcon name={"user-circle"} color={color}/>,
                 href: (GlobalConstants.isLoggedIn())? "/profile" : "/login"  }}
         />
 

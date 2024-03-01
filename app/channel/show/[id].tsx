@@ -1,5 +1,4 @@
 import {FlatList, StyleSheet, View} from 'react-native';
-import { Text } from '@/components/Themed';
 import React, {useEffect, useState} from 'react';
 import axiosHttp from "@/app/auth/interceptor";
 import {GlobalConstants} from "@/app/common/Global-constants";
@@ -9,7 +8,7 @@ import {Channel} from "@/app/Interface/Channel";
 import {Div, Header} from "@expo/html-elements";
 import {ChannelMessages} from "@/app/Interface/ChannelMessages";
 import ChatBubble from "react-native-chat-bubble";
-import {Button, TextInput} from 'react-native-paper';
+import {Button, TextInput, Text} from 'react-native-paper';
 
 
 export default function channel() {
@@ -66,7 +65,7 @@ export default function channel() {
         <View style={styles.container}>
             <>
                 <Header style={styles.topLine}>
-                    <Text style={styles.title}>{channel?.name}</Text>
+                    <Text variant={"titleMedium"} style={styles.title}>{channel?.name}</Text>
                 </Header>
                 <FlatList
                     showsVerticalScrollIndicator={false}
@@ -170,11 +169,9 @@ const styles = StyleSheet.create({
         width: "100%",
         position: "absolute",
         top: 0,
+        borderBottomWidth: 1,
         display: "flex",
         alignItems: "center",
-        borderWidth: 1,
-        marginBottom: 50,
-        backgroundColor:"white",
         zIndex: 50
     },
     btn:{
@@ -218,7 +215,10 @@ const styles = StyleSheet.create({
         bottom:0
     },
     bubble:{
-        width:"30%"
+        width:"50%",
+        display: "flex",
+        justifyContent: "center",
+        alignItems: "center"
     },
     bottom:{
         width: "100%",

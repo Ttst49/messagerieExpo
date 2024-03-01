@@ -4,7 +4,7 @@ import { View } from '@/components/Themed';
 import React from 'react';
 
 
-export default function Home() {
+export default function Index() {
 
 
   return (

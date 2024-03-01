@@ -27,7 +27,7 @@ export default function login() {
                 }
             })
             .then(()=>{
-                navigation.push("/home")
+                navigation.push("/")
             })
 
     }

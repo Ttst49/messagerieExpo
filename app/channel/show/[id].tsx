@@ -1,4 +1,4 @@
-import {FlatList, StyleSheet, TextInput, View} from 'react-native';
+import {FlatList, StyleSheet, View} from 'react-native';
 import { Text } from '@/components/Themed';
 import React, {useEffect, useState} from 'react';
 import axiosHttp from "@/app/auth/interceptor";
@@ -6,9 +6,10 @@ import {GlobalConstants} from "@/app/common/Global-constants";
 import {Card} from "@gluestack-ui/themed";
 import {useLocalSearchParams, useRouter} from "expo-router";
 import {Channel} from "@/app/Interface/Channel";
-import {Header} from "@expo/html-elements";
+import {Div, Header} from "@expo/html-elements";
 import {ChannelMessages} from "@/app/Interface/ChannelMessages";
 import ChatBubble from "react-native-chat-bubble";
+import {Button, TextInput} from 'react-native-paper';
 
 
 export default function channel() {
@@ -68,6 +69,7 @@ export default function channel() {
                     <Text style={styles.title}>{channel?.name}</Text>
                 </Header>
                 <FlatList
+                    showsVerticalScrollIndicator={false}
                     style={styles.list}
                     data={channel?.channelMessages}
                     renderItem={({item}:{item:ChannelMessages})=>
@@ -76,6 +78,7 @@ export default function channel() {
                                 ?
                                 <>
                                     <ChatBubble
+                                        style={styles.bubble}
                                         isOwnMessage={true}
                                         bubbleColor='#1084ff'
                                         tailColor='#1084ff'
@@ -89,6 +92,7 @@ export default function channel() {
                                 :
                                 <>
                                     <ChatBubble
+                                        style={styles.bubble}
                                         isOwnMessage={false}
                                         bubbleColor='#A3A3A3'
                                         tailColor='#1084ff'
@@ -104,38 +108,39 @@ export default function channel() {
                     }
                 />
                 {channel?.channelMembers.some(user=>user.relatedTo.username==GlobalConstants.actualUser.username) ?
-                    <>
+                    <Div style={styles.bottom}>
                         <TextInput
-                        style={styles.input}
-                        placeholder={"Votre message..."}
-                        onChangeText={text=>setNewMessage(text)}
+                            style={styles.input}
+                            placeholder={"Votre message..."}
+                            onChangeText={value=>setNewMessage(value)}
+                            mode={"outlined"}
                         />
-                        <Text
-                            style={styles.btnCreate}
+                        <Button
+                            icon={"send"}
+                            mode={"elevated"}
                             onPress={sendNewMessage}>
-                            Envoyer un message
-                        </Text>
+                            Envoyer
+                        </Button>
 
-                    </>
+                    </Div>
 
                     :
-                <>
+                <Div style={styles.bottom}>
                     <TextInput
                         style={styles.inputDisabled}
                         placeholder={"Rejoignez ce channel avant d'envoyer un message..."}
-                        onChangeText={text=>setNewMessage(text)}
-                        editable={false}
+                        disabled={true}
+                        mode={"outlined"}
                     />
-                    <Text
-                        style={styles.btnCreate}
+                    <Button
+                        mode={"elevated"}
                         onPress={joinChannel}>
-                        Rejoindre ce channel
-                    </Text>
+                        Rejoindre
+                    </Button>
 
-                </>
+                </Div>
                 }
             </>
-
         </View>
     );
 }
@@ -146,6 +151,7 @@ const styles = StyleSheet.create({
         flexDirection: "column",
         alignItems: 'center',
         justifyContent: 'center',
+        width: "100%"
     },
     channelCard:{
         width: '75%',
@@ -166,13 +172,10 @@ const styles = StyleSheet.create({
         top: 0,
         display: "flex",
         alignItems: "center",
-        borderBottomLeftRadius:5,
-        borderBottomRightRadius:0,
-        borderTopLeftRadius:0,
-        borderTopRightRadius:5,
         borderWidth: 1,
-        margin: null,
-        alignSelf: "stretch"
+        marginBottom: 50,
+        backgroundColor:"white",
+        zIndex: 50
     },
     btn:{
         margin: 15,
@@ -187,39 +190,18 @@ const styles = StyleSheet.create({
     },
     list:{
         marginTop: 30,
+        width: "90%"
     },
     input:{
-        flex: 1,
-        width: "75%",
-        fontSize: 25,
-        borderStyle: "solid",
-        borderColor: "gray",
-        padding: 5,
-        margin: 15,
-        borderWidth: 1,
-        position: "absolute",
-        alignSelf: "stretch",
-        bottom:0,
-
+      width: "50%"
     },
-    inputDisabled:{
-        flex: 1,
-        width: "75%",
-        fontSize: 25,
-        borderStyle: "solid",
-        borderColor: "gray",
-        padding: 5,
-        margin: 15,
-        borderWidth: 1,
-        position: "absolute",
-        alignSelf: "stretch",
-        bottom:0,
-        color: "gray"
 
+    inputDisabled:{
+        width: "50%",
     },
 
     content:{
-        width:"100%"
+        width:"100%",
     },
     btnCreate:{
         margin: 15,
@@ -234,5 +216,16 @@ const styles = StyleSheet.create({
         position: "absolute",
         right: 0,
         bottom:0
+    },
+    bubble:{
+        width:"30%"
+    },
+    bottom:{
+        width: "100%",
+        display: "flex",
+        flexDirection: "row",
+        justifyContent: "space-around",
+        alignItems: "center",
+        marginBottom: 10
     }
 });

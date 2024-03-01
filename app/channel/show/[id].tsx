@@ -42,11 +42,22 @@ export default function channel() {
                 GlobalConstants.baseUrl+"channel/message/create/"+channel!.id,
                 {"content":newMessage}
             )
-                .then((response)=>{
-                    console.log(response)
+                .then(()=>{
+                    getChannel(id)
                 })
         }
 
+    }
+
+    function joinChannel(){
+        if (channel?.channelMembers.some(user=>user.relatedTo.username==GlobalConstants.actualUser.username)){
+            axiosHttp.post(GlobalConstants.baseUrl+"channel/join/"+id,id)
+                .then((response)=>{
+                    console.log(response)
+                    console.log(channel?.channelMembers)
+                    console.log(GlobalConstants.actualUser)
+                })
+        }
     }
 
 
@@ -61,7 +72,7 @@ export default function channel() {
                     data={channel?.channelMessages}
                     renderItem={({item}:{item:ChannelMessages})=>
                         <Card style={styles.content}>
-                            {item.author.relatedTo.id == GlobalConstants.actualUser.profile.id
+                            {item.author.relatedTo.id == GlobalConstants.actualUser.id
                                 ?
                                 <>
                                     <ChatBubble
@@ -92,12 +103,37 @@ export default function channel() {
                         </Card>
                     }
                 />
-                <TextInput
-                    style={styles.input}
-                    placeholder={"Votre message..."}
-                    onChangeText={text=>setNewMessage(text)}
-                />
-                    <Text style={styles.btnCreate} onPress={sendNewMessage} >Envoyer un message</Text>
+                {channel?.channelMembers.some(user=>user.relatedTo.username==GlobalConstants.actualUser.username) ?
+                    <>
+                        <TextInput
+                        style={styles.input}
+                        placeholder={"Votre message..."}
+                        onChangeText={text=>setNewMessage(text)}
+                        />
+                        <Text
+                            style={styles.btnCreate}
+                            onPress={sendNewMessage}>
+                            Envoyer un message
+                        </Text>
+
+                    </>
+
+                    :
+                <>
+                    <TextInput
+                        style={styles.inputDisabled}
+                        placeholder={"Rejoignez ce channel avant d'envoyer un message..."}
+                        onChangeText={text=>setNewMessage(text)}
+                        editable={false}
+                    />
+                    <Text
+                        style={styles.btnCreate}
+                        onPress={joinChannel}>
+                        Rejoindre ce channel
+                    </Text>
+
+                </>
+                }
             </>
 
         </View>
@@ -166,6 +202,22 @@ const styles = StyleSheet.create({
         bottom:0,
 
     },
+    inputDisabled:{
+        flex: 1,
+        width: "75%",
+        fontSize: 25,
+        borderStyle: "solid",
+        borderColor: "gray",
+        padding: 5,
+        margin: 15,
+        borderWidth: 1,
+        position: "absolute",
+        alignSelf: "stretch",
+        bottom:0,
+        color: "gray"
+
+    },
+
     content:{
         width:"100%"
     },

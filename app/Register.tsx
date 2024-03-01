@@ -13,9 +13,10 @@ export default function register() {
 
     function register(){
         const user = {username,password}
-        axios.post(GlobalConstants.baseUrl+"register",user)
-            .then((response)=>{
-            })
+        if (user.username && user.password){
+            axios.post(GlobalConstants.baseUrl+"register",user)
+                .then()
+        }
     }
 
 

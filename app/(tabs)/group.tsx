@@ -47,11 +47,11 @@ export default function group() {
                             style={styles.groupCard}
                         >
                             <Card.Content>
-                                <Text variant={"titleLarge"}>{
+                                <Text variant={"titleLarge"}>Groupe de {
                                 item.groupMembers[0].relatedTo.username+
                                 " / "+
                                 item.groupMembers[1].relatedTo.username
-                            }</Text>
+                            }...</Text>
                             </Card.Content>
                             <Card.Actions>
                                 {item.owner.id == GlobalConstants.actualUser.profile.id

@@ -50,12 +50,12 @@ export default function channel() {
     }
 
     function joinChannel(){
-        if (channel?.channelMembers.some(user=>user.relatedTo.username==GlobalConstants.actualUser.username)){
+        if (channel?.channelMembers.some(user=>user.relatedTo.username==GlobalConstants.currentUser.username)){
             axiosHttp.post(GlobalConstants.baseUrl+"channel/join/"+id,id)
                 .then((response)=>{
                     console.log(response)
                     console.log(channel?.channelMembers)
-                    console.log(GlobalConstants.actualUser)
+                    console.log(GlobalConstants.currentUser)
                 })
         }
     }
@@ -73,7 +73,7 @@ export default function channel() {
                     data={channel?.channelMessages}
                     renderItem={({item}:{item:ChannelMessages})=>
                         <Card style={styles.content}>
-                            {item.author.relatedTo.id == GlobalConstants.actualUser.id
+                            {item.author.relatedTo.id == GlobalConstants.currentUser.id
                                 ?
                                 <>
                                     <ChatBubble
@@ -106,7 +106,7 @@ export default function channel() {
                         </Card>
                     }
                 />
-                {channel?.channelMembers.some(user=>user.relatedTo.username==GlobalConstants.actualUser.username) ?
+                {channel?.channelMembers.some(user=>user.relatedTo.username==GlobalConstants.currentUser.username) ?
                     <Div style={styles.bottom}>
                         <TextInput
                             style={styles.input}

@@ -64,7 +64,7 @@ export default function channel() {
                     data={group?.groupMessages}
                     renderItem={({item}:{item:GroupMessage})=>
                         <Card style={styles.content}>
-                            {item.author.relatedTo.id != GlobalConstants.actualUser.id
+                            {item.author.relatedTo.id != GlobalConstants.currentUser.id
                                 ?
                                 <>
                                     <ChatBubble

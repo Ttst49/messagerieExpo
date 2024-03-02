@@ -20,7 +20,7 @@ export default function login() {
             })
         await axiosHttp.get(GlobalConstants.baseUrl+"profile/getActual")
             .then((response:any)=>{
-                GlobalConstants.actualUser = {
+                GlobalConstants.currentUser = {
                     id:response.data.id,
                     username:response.data.username,
                     profile: response.data.profile

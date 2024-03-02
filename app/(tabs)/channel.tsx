@@ -50,7 +50,7 @@ export default function channel() {
                                 <Text variant={"titleLarge"}>{item.name}</Text>
                             </Card.Content>
                             <Card.Actions>
-                                {item.owner.id == GlobalConstants.actualUser.profile.id
+                                {item.owner.id == GlobalConstants.currentUser.profile.id
                                     ?
                                     <>
                                         <Button onPress={()=>{removeChannel(item.id)}}>Supprimer channel</Button>

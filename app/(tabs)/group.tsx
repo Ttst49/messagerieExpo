@@ -54,7 +54,7 @@ export default function group() {
                             }...</Text>
                             </Card.Content>
                             <Card.Actions>
-                                {item.owner.id == GlobalConstants.actualUser.profile.id
+                                {item.owner.id == GlobalConstants.currentUser.profile.id
                                     ?
                                     <>
                                         <Button onPress={()=>{navigation.push({pathname:`/group/edit/${item.id}`})}}>Editer groupe</Button>

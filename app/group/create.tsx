@@ -1,14 +1,15 @@
 import {Button, View, StyleSheet, FlatList} from "react-native";
 import {useRouter} from "expo-router";
-import {Text} from "react-native-paper";
+import {Checkbox, Text} from "react-native-paper";
 import React, {useEffect, useState} from "react";
-import {UserFull} from "@/app/Interface/UserFull";
 import {GlobalConstants} from "@/app/common/Global-constants";
 import axiosHttp from "@/app/auth/interceptor";
+import {User} from "@/app/Interface/User";
 
 export default function register() {
     const navigation = useRouter()
-    const [friends, setFriends]= useState<UserFull[]>([])
+    const [friends, setFriends]= useState<User[]>([])
+    const[checked,setChecked]= useState(false)
 
     useEffect(() => {
         setTimeout(()=>{
@@ -35,8 +36,15 @@ export default function register() {
         <View style={styles.container}>
             <FlatList
                 data={friends}
-                renderItem={({item}:{item:UserFull})=>
-                    <Text>coucou</Text>
+                renderItem={({item}:{item:User})=>
+                    <>
+                        <Checkbox
+                            status={checked?"checked":"unchecked"}
+                            onPress={()=>{setChecked(!checked)}}
+
+                        />
+                        <Text>{item.username}</Text>
+                    </>
                 }
             />
             <Button onPress={createGroup} title="Create Channel" />

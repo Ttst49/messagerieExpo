@@ -1,11 +1,11 @@
-import {FlatList, StyleSheet, Text} from 'react-native';
+import {FlatList, Image, StyleSheet, Text} from 'react-native';
 import {View } from '@/components/Themed';
 import {GlobalConstants} from "@/app/common/Global-constants";
 import {useRouter} from "expo-router";
 import React, {useEffect, useState} from "react";
 import {User} from "@/app/Interface/User";
 import axiosHttp from "@/app/auth/interceptor";
-import {Avatar, Button, FAB} from "react-native-paper";
+import {Avatar, Text as TextPaper, FAB} from "react-native-paper";
 import {Div} from "@expo/html-elements";
 
 export default function profile() {
@@ -34,6 +34,7 @@ export default function profile() {
     return (
         <View style={styles.container}>
             <View style={styles.content}>
+                <TextPaper variant={"titleLarge"}>Amis</TextPaper>
                 <FlatList
                     data={friends}
                     renderItem={({item}:{item:User})=>
@@ -49,7 +50,8 @@ export default function profile() {
                     style={styles.btnSuccess}
                     icon="account-details"
                      onPress={() => navigation.push("/user/")}
-                     label={"Voir tous les utilisateurs"} />
+                     label={"Voir tous les utilisateurs"}
+                />
             </View>
         </View>
     );
@@ -86,5 +88,6 @@ const styles = StyleSheet.create({
         alignItems: 'center',
         justifyContent: 'center',
     }
+
 
 });

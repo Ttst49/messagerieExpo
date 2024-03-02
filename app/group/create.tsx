@@ -1,19 +1,43 @@
-import {Button, View,StyleSheet} from "react-native";
+import {Button, View, StyleSheet, FlatList} from "react-native";
 import {useRouter} from "expo-router";
-import {Checkbox} from "react-native-paper";
+import {Text} from "react-native-paper";
+import React, {useEffect, useState} from "react";
+import {UserFull} from "@/app/Interface/UserFull";
+import {GlobalConstants} from "@/app/common/Global-constants";
+import axiosHttp from "@/app/auth/interceptor";
 
 export default function register() {
     const navigation = useRouter()
+    const [friends, setFriends]= useState<UserFull[]>([])
 
-    async function createGroup(){
+    useEffect(() => {
+        setTimeout(()=>{
+            if (!GlobalConstants.isLoggedIn()){
+                navigation.push("/group")
+            }else {
+                getFriends()
+            }
+        },500)
+    }, []);
+
+    function createGroup(){
         console.log("coucou")
+    }
+
+    function getFriends(){
+        axiosHttp.get(GlobalConstants.baseUrl+"relations/getFriends")
+            .then((response)=>{
+                setFriends(response.data)
+            })
     }
 
     return (
         <View style={styles.container}>
-            <Checkbox
-                status={"unchecked"}
-
+            <FlatList
+                data={friends}
+                renderItem={({item}:{item:UserFull})=>
+                    <Text>coucou</Text>
+                }
             />
             <Button onPress={createGroup} title="Create Channel" />
         </View>

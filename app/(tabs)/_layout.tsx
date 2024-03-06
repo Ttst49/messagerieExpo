@@ -50,7 +50,7 @@ export default function TabLayout() {
         <Tabs.Screen
             name="profile"
             options={{
-                title: "profile",
+                title: (GlobalConstants.isLoggedIn()? "profile":"login"),
                 tabBarIcon: ({color})=><TabBarIcon name={"user-circle"} color={color}/>,
                 href: (GlobalConstants.isLoggedIn())? "/profile" : "/login"  }}
         />

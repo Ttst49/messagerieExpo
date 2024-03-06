@@ -5,10 +5,10 @@ import {GlobalConstants} from "@/app/common/Global-constants";
 import {Card} from "@gluestack-ui/themed";
 import {useLocalSearchParams, useRouter} from "expo-router";
 import {Channel} from "@/app/Interface/Channel";
-import {Div, Header} from "@expo/html-elements";
+import {Div, Header, Span} from "@expo/html-elements";
 import {ChannelMessages} from "@/app/Interface/ChannelMessages";
-import ChatBubble from "react-native-chat-bubble";
-import {Button, TextInput, Text} from 'react-native-paper';
+import {Button, TextInput, Text, Avatar, Menu, PaperProvider, Tooltip} from 'react-native-paper';
+import ChatBubble from 'react-native-chat-bubble';
 
 
 export default function channel() {
@@ -16,7 +16,14 @@ export default function channel() {
     const [newMessage,setNewMessage]= useState("")
     const navigation = useRouter()
     const {id}= useLocalSearchParams<{id:string}>()
+    const [visible, setVisible] = React.useState(false);
 
+    function openMenu(){
+        setVisible(!visible)
+    }
+    function closeMenu(){
+        setVisible(!visible)
+    }
 
     useEffect(() => {
         setTimeout(()=>{
@@ -75,7 +82,10 @@ export default function channel() {
                         <Card style={styles.content}>
                             {item.author.relatedTo.id == GlobalConstants.currentUser.id
                                 ?
-                                <>
+                                <PaperProvider>
+                                    <Span style={styles.right}>
+                                        <Avatar.Text size={32} label={item.author.relatedTo.username[0]} />
+                                    </Span>
                                     <ChatBubble
                                         style={styles.bubble}
                                         isOwnMessage={true}
@@ -83,13 +93,16 @@ export default function channel() {
                                         tailColor='#1084ff'
                                         withTail={false}
                                         onPress={() => console.log(item)}
-                                        onLongPress={()=>console.log("ouille")}
+                                        onLongPress={()=>openMenu}
                                     >
                                         <Text>{item.content}</Text>
                                     </ChatBubble>
-                                </>
+                                </PaperProvider>
                                 :
-                                <>
+                                <PaperProvider>
+                                    <Span style={styles.left}>
+                                        <Avatar.Text size={32} label={item.author.relatedTo.username[0]} />
+                                    </Span>
                                     <ChatBubble
                                         style={styles.bubble}
                                         isOwnMessage={false}
@@ -97,11 +110,11 @@ export default function channel() {
                                         tailColor='#1084ff'
                                         withTail={false}
                                         onPress={() => console.log(item)}
-                                        onLongPress={()=>console.log("ouille")}
+                                        onLongPress={()=>openMenu}
                                     >
                                         <Text>{item.content}</Text>
                                     </ChatBubble>
-                                </>
+                                </PaperProvider>
                             }
                         </Card>
                     }
@@ -218,8 +231,9 @@ const styles = StyleSheet.create({
         width:"50%",
         display: "flex",
         justifyContent: "center",
-        alignItems: "center"
+        alignItems: "center",
     },
+
     bottom:{
         width: "100%",
         display: "flex",
@@ -227,5 +241,17 @@ const styles = StyleSheet.create({
         justifyContent: "space-around",
         alignItems: "center",
         marginBottom: 10
+    },
+    right:{
+        width:"100%",
+        display: "flex",
+        flexDirection: "row",
+        justifyContent: "flex-end"
+    },
+    left:{
+        width:"100%",
+        display: "flex",
+        flexDirection: "row",
+        justifyContent: "flex-start"
     }
 });

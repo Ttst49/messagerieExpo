@@ -47,6 +47,7 @@ export default function TabLayout() {
                 tabBarIcon: ({color})=><TabBarIcon name={"users"} color={color}/>,
                 href: (GlobalConstants.isLoggedIn())? "/group" : null  }}
         />
+
         <Tabs.Screen
             name="profile"
             options={{

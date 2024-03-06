@@ -4,8 +4,8 @@ import {useLocalSearchParams, useRouter} from "expo-router";
 import {GlobalConstants} from "@/app/common/Global-constants";
 import axiosHttp from "@/app/auth/interceptor";
 import {FlatList, View, StyleSheet} from "react-native";
-import {Div, Header} from "@expo/html-elements";
-import {Button, Text, TextInput} from "react-native-paper";
+import {Div, Header, Span} from "@expo/html-elements";
+import {Avatar, Button, Text, TextInput} from "react-native-paper";
 import {GroupMessage} from "@/app/Interface/GroupMessage";
 import ChatBubble from "react-native-chat-bubble";
 import {Card} from "@gluestack-ui/themed";
@@ -67,6 +67,9 @@ export default function channel() {
                             {item.author.relatedTo.id != GlobalConstants.currentUser.id
                                 ?
                                 <>
+                                    <Span style={styles.left}>
+                                        <Avatar.Text size={32} label={item.author.relatedTo.username[0]} />
+                                    </Span>
                                     <ChatBubble
                                         style={styles.bubble}
                                         isOwnMessage={false}
@@ -81,6 +84,9 @@ export default function channel() {
                                 </>
                                 :
                                 <>
+                                    <Span style={styles.right}>
+                                        <Avatar.Text size={32} label={item.author.relatedTo.username[0]} />
+                                    </Span>
                                     <ChatBubble
                                         style={styles.bubble}
                                         isOwnMessage={true}
@@ -200,5 +206,17 @@ const styles = StyleSheet.create({
         justifyContent: "space-around",
         alignItems: "center",
         marginBottom: 10
+    },
+    right:{
+        width:"100%",
+        display: "flex",
+        flexDirection: "row",
+        justifyContent: "flex-end"
+    },
+    left:{
+        width:"100%",
+        display: "flex",
+        flexDirection: "row",
+        justifyContent: "flex-start"
     }
 });

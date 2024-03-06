@@ -38,12 +38,11 @@ export default function register() {
                 data={friends}
                 renderItem={({item}:{item:User})=>
                     <>
+                        <Text>{item.username}</Text>
                         <Checkbox
                             status={checked?"checked":"unchecked"}
-                            onPress={()=>{setChecked(!checked)}}
-
+                            onPress={()=>setChecked(!checked)}
                         />
-                        <Text>{item.username}</Text>
                     </>
                 }
             />

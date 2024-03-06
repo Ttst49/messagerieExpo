@@ -1,4 +1,4 @@
-import {FlatList, Image, StyleSheet, Text} from 'react-native';
+import {FlatList, StyleSheet, Text} from 'react-native';
 import {View } from '@/components/Themed';
 import {GlobalConstants} from "@/app/common/Global-constants";
 import {useRouter} from "expo-router";
